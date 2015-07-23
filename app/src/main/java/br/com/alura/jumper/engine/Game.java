@@ -1,28 +1,43 @@
 package br.com.alura.jumper.engine;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
+import br.com.alura.jumper.R;
+import br.com.alura.jumper.elements.Canos;
 import br.com.alura.jumper.elements.Passaro;
+import br.com.alura.jumper.graficos.Tela;
 
 /**
  * Created by Carlos Eduardo on 22/07/2015.
  */
-public class Game extends SurfaceView implements Runnable {
+public class Game extends SurfaceView implements Runnable, View.OnTouchListener {
 
+    private Tela tela;
     private boolean isRunning = true;
     private SurfaceHolder holder = getHolder();
     private Passaro passaro;
+    private Bitmap background;
+    private Canos canos;
 
     public Game(Context context) {
         super(context);
+        tela = new Tela(context);
         inicializaElementos();
+        setOnTouchListener(this);
     }
 
     private void inicializaElementos() {
-        passaro = new Passaro();
+        passaro = new Passaro(tela);
+        canos = new Canos(tela);
+        Bitmap back = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        background = Bitmap.createScaledBitmap(back, back.getWidth(), tela.getAltura(), false);
     }
 
     @Override
@@ -31,8 +46,11 @@ public class Game extends SurfaceView implements Runnable {
             if(!holder.getSurface().isValid()) continue;
             Canvas canvas = holder.lockCanvas();
 
+            canvas.drawBitmap(background, 0, 0, null);
             passaro.desenhaNo(canvas);
             passaro.cai();
+            canos.desenhaNo(canvas);
+            canos.move();
 
             holder.unlockCanvasAndPost(canvas);
         }
@@ -44,5 +62,11 @@ public class Game extends SurfaceView implements Runnable {
 
     public void cancela() {
         isRunning = false;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        passaro.pula();
+        return false;
     }
 }

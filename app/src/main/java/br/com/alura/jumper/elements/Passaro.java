@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import br.com.alura.jumper.graficos.Cores;
+import br.com.alura.jumper.graficos.Tela;
 
 /**
  * Created by Carlos Eduardo on 22/07/2015.
@@ -12,10 +13,12 @@ public class Passaro {
 
     private static final float RAIO = 50;
     private static final float X = 100;
+    private final Tela tela;
 
     private int altura;
 
-    public Passaro() {
+    public Passaro(Tela tela) {
+        this.tela = tela;
         this.altura = 100;
     }
 
@@ -24,7 +27,17 @@ public class Passaro {
     }
 
     public void cai() {
-        altura += 5;
+        boolean chegouNoChao = altura + RAIO > tela.getAltura();
+        if (!chegouNoChao) {
+            altura += 5;
+        }
+    }
+
+    public void pula() {
+        int bordaSuperior = (int) (altura - RAIO);
+        if (bordaSuperior > 0) {
+            altura -= 150;
+        }
     }
 
 }
