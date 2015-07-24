@@ -12,6 +12,7 @@ import android.view.View;
 import br.com.alura.jumper.R;
 import br.com.alura.jumper.elements.Canos;
 import br.com.alura.jumper.elements.Passaro;
+import br.com.alura.jumper.elements.Pontuacao;
 import br.com.alura.jumper.graficos.Tela;
 
 /**
@@ -25,6 +26,7 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
     private Passaro passaro;
     private Bitmap background;
     private Canos canos;
+    private Pontuacao pontuacao;
 
     public Game(Context context) {
         super(context);
@@ -34,8 +36,9 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
     }
 
     private void inicializaElementos() {
+        pontuacao = new Pontuacao();
         passaro = new Passaro(tela);
-        canos = new Canos(tela);
+        canos = new Canos(tela, pontuacao);
         Bitmap back = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         background = Bitmap.createScaledBitmap(back, back.getWidth(), tela.getAltura(), false);
     }
@@ -49,8 +52,11 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
             canvas.drawBitmap(background, 0, 0, null);
             passaro.desenhaNo(canvas);
             passaro.cai();
+
             canos.desenhaNo(canvas);
             canos.move();
+
+            pontuacao.desenhaNo(canvas);
 
             holder.unlockCanvasAndPost(canvas);
         }
