@@ -10,26 +10,46 @@ import br.com.alura.jumper.graficos.Tela;
  */
 public class Cano {
 
+    private final int alturaCanoInferior;
     private int posicao;
     private Tela tela;
+    private int alturaCanoSuperior;
+    public static final int ALTURA_DO_CANO = 250;
+    public static final int LARGURA_DO_CANO = 100;
 
     public Cano(Tela tela, int posicao) {
         this.tela = tela;
         this.posicao = posicao;
+        alturaCanoSuperior = ALTURA_DO_CANO + valorAleatorio();
+        alturaCanoInferior = tela.getAltura() - ALTURA_DO_CANO - valorAleatorio();
     }
-
-    public static final int ALTURA_DO_CANO = 250;
-    public static final int LARGURA_DO_CANO = 100;
 
     public void desenhaNo(Canvas canvas) {
         desenhaCanoInferiorNo(canvas);
+        desenhaCanoSuperiorNo(canvas);
     }
 
     private void desenhaCanoInferiorNo(Canvas canvas) {
-        canvas.drawRect(posicao, tela.getAltura() - ALTURA_DO_CANO, posicao + LARGURA_DO_CANO, tela.getAltura(), Cores.getCorDoCano());
+        canvas.drawRect(posicao, alturaCanoInferior, posicao + LARGURA_DO_CANO, tela.getAltura(), Cores.getCorDoCano());
+    }
+
+    private void desenhaCanoSuperiorNo(Canvas canvas) {
+        canvas.drawRect(posicao, 0, posicao + LARGURA_DO_CANO, alturaCanoSuperior, Cores.getCorDoCano());
     }
 
     public void move() {
         posicao -= 5;
+    }
+
+    private int valorAleatorio() {
+        return (int) (Math.random() * 200);
+    }
+
+    public boolean saiuDaTela() {
+        return posicao + LARGURA_DO_CANO < 0;
+    }
+
+    public int getPosicao() {
+        return posicao;
     }
 }
