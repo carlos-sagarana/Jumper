@@ -42,7 +42,7 @@ public class Cano {
     }
 
     private int valorAleatorio() {
-        return (int) (Math.random() * 200);
+        return (int) (Math.random() * 100);
     }
 
     public boolean saiuDaTela() {
@@ -51,5 +51,14 @@ public class Cano {
 
     public int getPosicao() {
         return posicao;
+    }
+
+    public boolean temColisaoVerticalCom(Passaro passaro) {
+        return passaro.getAltura() - Passaro.RAIO < alturaCanoSuperior
+                || passaro.getAltura() + Passaro.RAIO > alturaCanoInferior;
+    }
+
+    public boolean temColisaoHorizontalCom(Passaro passaro) {
+        return posicao - Passaro.X < Passaro.RAIO;
     }
 }

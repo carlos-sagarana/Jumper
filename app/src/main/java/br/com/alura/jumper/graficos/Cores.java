@@ -28,4 +28,12 @@ public class Cores {
         branco.setShadowLayer(3, 5, 5, 0xFF000000);
         return branco;
     }
+
+    public static Paint getCorDoGameOver() {
+        Paint gameOver = new Paint();
+        gameOver.setColor(0xFFFF0000);
+        gameOver.setTextSize(50);
+        gameOver.setShadowLayer(2, 3, 3, 0xFF000000);
+        return gameOver;
+    }
 }

@@ -11,8 +11,8 @@ import br.com.alura.jumper.graficos.Tela;
  */
 public class Passaro {
 
-    private static final float RAIO = 50;
-    private static final float X = 100;
+    public static final float RAIO = 50;
+    public static final float X = 100;
     private final Tela tela;
 
     private int altura;
@@ -40,4 +40,7 @@ public class Passaro {
         }
     }
 
+    public int getAltura() {
+        return altura;
+    }
 }
