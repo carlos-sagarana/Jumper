@@ -21,6 +21,7 @@ import br.com.alura.jumper.graficos.Tela;
  */
 public class Game extends SurfaceView implements Runnable, View.OnTouchListener {
 
+    private final Context context;
     private Tela tela;
     private boolean isRunning = true;
     private SurfaceHolder holder = getHolder();
@@ -31,6 +32,7 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
 
     public Game(Context context) {
         super(context);
+        this.context = context;
         tela = new Tela(context);
         inicializaElementos();
         setOnTouchListener(this);
@@ -38,8 +40,8 @@ public class Game extends SurfaceView implements Runnable, View.OnTouchListener 
 
     private void inicializaElementos() {
         pontuacao = new Pontuacao();
-        passaro = new Passaro(tela);
-        canos = new Canos(tela, pontuacao);
+        passaro = new Passaro(tela, context);
+        canos = new Canos(tela, pontuacao, context);
         Bitmap back = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         background = Bitmap.createScaledBitmap(back, back.getWidth(), tela.getAltura(), false);
     }

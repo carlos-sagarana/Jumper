@@ -1,5 +1,6 @@
 package br.com.alura.jumper.elements;
 
+import android.content.Context;
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
@@ -17,15 +18,17 @@ public class Canos {
     private static final int QUANTIDADE_DE_CANOS = 5;
     private final Tela tela;
     private final Pontuacao pontuacao;
+    private final Context context;
     List<Cano> canos = new ArrayList<>();
     private int maximo;
 
-    public Canos(Tela tela, Pontuacao pontuacao) {
+    public Canos(Tela tela, Pontuacao pontuacao, Context context) {
+        this.context = context;
         this.pontuacao = pontuacao;
         this.tela = tela;
         int posicao = 400;
         for (int i = 0; i < QUANTIDADE_DE_CANOS; i++) {
-            canos.add(new Cano(tela, posicao));
+            canos.add(new Cano(tela, posicao, context));
             posicao += DISTANCIA_ENTRE_CANOS;
         }
     }
@@ -46,7 +49,7 @@ public class Canos {
             if (cano.saiuDaTela()) {
                 pontuacao.aumenta();
                 iterator.remove();
-                iterator.add(new Cano(tela, getMaximo() + DISTANCIA_ENTRE_CANOS));
+                iterator.add(new Cano(tela, getMaximo() + DISTANCIA_ENTRE_CANOS, context));
             }
         }
     }
