@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import br.com.alura.jumper.R;
+import br.com.alura.jumper.engine.Som;
 import br.com.alura.jumper.graficos.Cores;
 import br.com.alura.jumper.graficos.Tela;
 
@@ -20,10 +21,12 @@ public class Passaro {
     private final Tela tela;
     private final Context context;
     private final Bitmap passaro;
+    private final Som som;
 
     private int altura;
 
-    public Passaro(Tela tela, Context context) {
+    public Passaro(Tela tela, Context context, Som som) {
+        this.som = som;
         this.context = context;
         this.tela = tela;
         this.altura = 100;
@@ -46,6 +49,7 @@ public class Passaro {
         int bordaSuperior = (int) (altura - RAIO);
         if (bordaSuperior > 0) {
             altura -= 100;
+            som.toca(Som.PULO);
         }
     }
 
